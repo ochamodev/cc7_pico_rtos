@@ -5,7 +5,7 @@
 
 int main() {
 
-    // Initialize standar library
+    // Initialize standard library
     stdio_init_all();
 
     while (1) {
