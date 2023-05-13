@@ -25,6 +25,17 @@
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "files.associations": {
         "irq.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "array": "c",
+        "executor": "c",
+        "memory": "c",
+        "future": "c",
+        "ranges": "c",
+        "functional": "c",
+        "tuple": "c",
+        "utility": "c",
+        "timer.h": "c",
+        "stdint.h": "c",
+        "stdio.h": "c"
     }
 }
