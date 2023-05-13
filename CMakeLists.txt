@@ -6,12 +6,14 @@ project(cc7_rtos_pico)
 
 pico_sdk_init()
 
+
+add_subdirectory(Misc)
 add_executable(cc7_rtos_pintos
     main.c
 )
 
 # Add pico_stdlib library, add more if used
-target_link_libraries(cc7_rtos_pintos pico_stdlib)
+target_link_libraries(cc7_rtos_pintos pico_stdlib Misc_timer)
 
 # enable usb output, disable uart output
 pico_enable_stdio_usb(cc7_rtos_pintos 1)
