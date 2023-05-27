@@ -36,6 +36,8 @@
         "utility": "c",
         "timer.h": "c",
         "stdint.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "queue.h": "c",
+        "threads.h": "c"
     }
 }
