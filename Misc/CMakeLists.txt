@@ -5,3 +5,4 @@ set(timer_utils_files
 
 add_library(Misc_timer ${timer_utils_files})
 target_link_libraries(Misc_timer pico_stdlib)
+target_include_directories(Misc_timer PUBLIC "../Threads/")
