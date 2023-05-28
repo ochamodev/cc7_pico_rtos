@@ -11,13 +11,13 @@ int main() {
     // Initialize standard library
     stdio_init_all();
     
-    initialize_timer();
+    
     initialize_scheduler();
     setup_sample_threads();
+    initialize_timer();
 
-    while (1) {
-        printf("timer finished");
-    }
+    // IDLE Thread
+    while (1) {}
     return 0;
 }
 

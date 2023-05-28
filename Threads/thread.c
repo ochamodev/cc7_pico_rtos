@@ -1,6 +1,7 @@
 #include "thread.h"
 
 #include "pico/stdlib.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /* Random value for struct thread's `magic' member.
@@ -21,6 +22,7 @@ pico_thread* thread_init(void* func, tid_t id, void* thread_args) {
    t->func = func;
    t->status = THREAD_BLOCKED;
    t->tid = id;
+   printf("Se inserto un thread con id: %d", id);
    return t;
 }
 
@@ -32,29 +34,28 @@ void add_to_ready_list(pico_thread* t) {
    queue_add_blocking(&ready_list, &t);
 }
 
-pico_thread* remove_from_waiting_list() {
-   pico_thread* t;
-   queue_remove_blocking(&wait_list, &t);
-   return t;
+void remove_from_waiting_list(pico_thread* t) {
+   queue_remove_blocking(&wait_list, t);
 }
 
-pico_thread* remove_from_ready_list() {
-   pico_thread* t;
-   queue_remove_blocking(&ready_list, &t);
+void remove_from_ready_list(pico_thread* t) {
+   queue_remove_blocking(&ready_list, t);
 }
 
 void thread_unblock() {
-   pico_thread* t = remove_from_waiting_list();
+   pico_thread* t;
+   remove_from_waiting_list(t);
    t->status = THREAD_READY;
    add_to_ready_list(t);
 }
 
 void schedule() {
-   pico_thread* t = remove_from_ready_list();
+   pico_thread* t;
+   remove_from_ready_list(t);
    // se ejecuta la función del thread
    t->status = THREAD_RUNNING;
-   t->func(t->args);
+   t->func(&t->args);
    t->status = THREAD_DYING;
-   free(t);
+   //free(t);
 
 }

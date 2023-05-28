@@ -35,8 +35,8 @@ void initialize_scheduler(void);
 
 pico_thread* thread_init (void* func, tid_t id, void* thread_args);
 void add_to_wait_list(pico_thread* t);
-pico_thread* remove_from_waiting_list(void);
-pico_thread* remove_from_ready_list(void);
+void remove_from_waiting_list(pico_thread* t);
+void remove_from_ready_list(pico_thread* t);
 /*
   Función que pasa de la wait list a la ready list
 */
