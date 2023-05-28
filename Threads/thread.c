@@ -22,6 +22,7 @@ pico_thread* thread_init(void* func, tid_t id, void* thread_args) {
    t->func = func;
    t->status = THREAD_BLOCKED;
    t->tid = id;
+   t->args = thread_args;
    printf("Se inserto un thread con id: %d", id);
    return t;
 }
@@ -54,7 +55,7 @@ void schedule() {
    remove_from_ready_list(t);
    // se ejecuta la función del thread
    t->status = THREAD_RUNNING;
-   t->func(&t->args);
+   t->func(t->args);
    t->status = THREAD_DYING;
    //free(t);
 
