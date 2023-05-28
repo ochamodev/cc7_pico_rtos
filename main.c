@@ -5,12 +5,13 @@
 #include "Threads/thread.h"
 
 void setup_sample_threads(void);
+void setup_uart(void);
 
 int main() {
 
     // Initialize standard library
     stdio_init_all();
-    
+    //setup_uart();
     
     initialize_scheduler();
     setup_sample_threads();
@@ -21,24 +22,50 @@ int main() {
     return 0;
 }
 
+
+
+
+void setup_uart() {
+    // Set up our UART with the required speed.
+    uart_init(UART_ID, BAUD_RATE);
+
+    // Set the TX and RX pins by using the function select on the GPIO
+    // Set datasheet for more information on function select
+    gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
+
+    // Use some the various UART functions to send out data
+    // In a default system, printf will also output via the default UART
+
+    // Send out a character without any conversions
+    uart_putc_raw(UART_ID, 'A');
+
+    // Send out a character but do CR/LF conversions
+    uart_putc(UART_ID, 'B');
+
+    // Send out a string, with CR/LF conversions
+    uart_puts(UART_ID, " Hello, UART!\n");
+}
+
 typedef struct thread_args {
     int n;
 } thread_args;
 
-void factorial(void* arg) {
+int32_t factorial(void* arg) {
     thread_args* s = (thread_args*) arg;
+    uart_puts(UART_ID, "faaactorial");
     int32_t f = 1;
     for (int i = 2; i <= s->n; i++) {
         f *= i;
     }
-    printf("Calculo factorial: %d", f);
+    return f;
 }
 
-void fibonacci(void* arg) {
-    thread_args* s = (thread_args*) arg;
+int32_t fibonacci(void* arg) {
+    thread_args *s = (thread_args*) arg;
     int32_t n = s->n;
-    if (n == 0) return;
-    if (n == 1) return;
+    if (n == 0) return n;
+    if (n == 1) return n;
 
     int n1 = 0, n2 = 1, n3 = 0;
 
@@ -47,7 +74,7 @@ void fibonacci(void* arg) {
         n1 = n2;
         n2 = n3;
     }
-    printf("Calculo fibonacci: %d", n3);
+    return n3;
 }
 
 void setup_sample_threads() {

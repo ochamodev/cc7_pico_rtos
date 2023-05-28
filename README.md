@@ -41,4 +41,19 @@ Accelerated floating-point libraries on-chip
 This project is a copy of VSCode project template for RP2040 C/C++ development.
 
 
+### Diagrama de estados de nuestro calendarizador
+
+@startuml
+
+Init -> Waiting
+Init : We create and initialize thread.
+Waiting : Every thread is placed on the waiting list.
+
+Waiting -> Ready
+Ready: Here we call at the 'func' property of the thread.
+Ready: We pass the args of the function from the arg property.
+Ready --> Dying
+Dying: After finishing thread execution we just call free to release the resources.
+@enduml
+
 
