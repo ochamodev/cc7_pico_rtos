@@ -2,6 +2,16 @@
 #define THREADS_THREAD_H
 #include "pico/util/queue.h"
 #include <stdint.h>
+#include "hardware/uart.h"
+
+
+#define UART_ID uart0
+#define BAUD_RATE 115200
+
+// We are using pins 0 and 1, but see the GPIO function select table in the
+// datasheet for information on which other pins can be used.
+#define UART_TX_PIN 0
+#define UART_RX_PIN 1
 
 // QUEUE
 static queue_t ready_list;
@@ -27,7 +37,7 @@ typedef int tid_t;
 typedef struct pico_thread {
   tid_t tid; // Thread Id
   thread_status status; // Thread status
-  void (*func)(void*); // Thread function to run
+  void* (*func)(void*); // Thread function to run
   void *args; // Threads functions args
 } pico_thread;
 

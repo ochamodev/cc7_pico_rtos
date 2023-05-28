@@ -28,11 +28,11 @@ pico_thread* thread_init(void* func, tid_t id, void* thread_args) {
 }
 
 void add_to_wait_list(pico_thread* t) {
-   queue_add_blocking(&wait_list, &t);
+   queue_add_blocking(&wait_list, t);
 }
 
 void add_to_ready_list(pico_thread* t) {
-   queue_add_blocking(&ready_list, &t);
+   queue_add_blocking(&ready_list, t);
 }
 
 void remove_from_waiting_list(pico_thread* t) {
@@ -55,8 +55,11 @@ void schedule() {
    remove_from_ready_list(t);
    // se ejecuta la función del thread
    t->status = THREAD_RUNNING;
-   t->func(t->args);
+   int32_t* x = (int32_t*) t->func(t->args);
+   if (x != NULL) {
+      uart_puts(UART_ID, "hello world");
+   }
    t->status = THREAD_DYING;
-   //free(t);
+   free(t);
 
 }
