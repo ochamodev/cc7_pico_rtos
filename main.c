@@ -11,7 +11,6 @@ int main() {
 
     // Initialize standard library
     stdio_init_all();
-    //setup_uart();
     
     initialize_scheduler();
     setup_sample_threads();
@@ -20,31 +19,6 @@ int main() {
     // IDLE Thread
     while (1) {}
     return 0;
-}
-
-
-
-
-void setup_uart() {
-    // Set up our UART with the required speed.
-    uart_init(UART_ID, BAUD_RATE);
-
-    // Set the TX and RX pins by using the function select on the GPIO
-    // Set datasheet for more information on function select
-    gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
-    gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
-
-    // Use some the various UART functions to send out data
-    // In a default system, printf will also output via the default UART
-
-    // Send out a character without any conversions
-    uart_putc_raw(UART_ID, 'A');
-
-    // Send out a character but do CR/LF conversions
-    uart_putc(UART_ID, 'B');
-
-    // Send out a string, with CR/LF conversions
-    uart_puts(UART_ID, " Hello, UART!\n");
 }
 
 typedef struct thread_args {
